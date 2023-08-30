@@ -5,8 +5,11 @@
 
 {% block body %}
 	<div class="container mt-4">
-	<h1 class="my-4">MyStore</h1>
-		<p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente consectetur error excepturi explicabo maxime architecto doloribus dolorum aliquid rerum minima?</p>
-		<a href="{{path('user_add')}}" class="btn btn-primary my-4">Inscription</a>
+		<h1 class="my-4">MyStore</h1>
+		<h5 class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente consectetur error excepturi explicabo maxime architecto doloribus dolorum aliquid rerum minima.</h5>
+
+		{% if not app.user %}
+			<a href="{{path('user_add')}}" class="btn btn-primary my-4">Inscription</a>
+		{% endif %}
 	</div>
 {% endblock %}

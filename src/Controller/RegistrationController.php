@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\User;
 use App\Form\RegistrationType;
 use App\Repository\UserRepository;
@@ -14,14 +15,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/membre', name: 'user_index')]
-    public function index(UserRepository $repo): Response
-    {
-        $users = $repo->findAll();
-        return $this->render('pages/registration/index.html.twig', [
-            'users' => $users
-        ]);
-    }
+    // #[Route('/membre', name: 'user_index')]
+    // public function index(UserRepository $repo): Response
+    // {
+    //     $users = $repo->findAll();
+    //     return $this->render('pages/registration/index.html.twig', [
+    //         'users' => $users
+    //     ]);
+    // }
 
     #[Route('/inscription', name: 'user_add')]
     public function registration(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $manager): Response
@@ -48,41 +49,41 @@ class RegistrationController extends AbstractController
             //     'l\'utilisateur a bien été ajouter!'
             // );
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('home_index');
         }
 
-        return $this->render('pages/registration/add.html.twig',[
+        return $this->render('pages/security/register.html.twig',[
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/membre/modifier/{id}', name: 'user_edit')]
-    public function edit(EntityManagerInterface $manager, Request $request, User $user): Response
-    {
-        $form = $this->createForm(RegistrationType::class, $user);
-        $form->handleRequest($request);
+    // #[Route('/membre/modifier/{id}', name: 'user_edit')]
+    // public function edit(EntityManagerInterface $manager, Request $request, User $user): Response
+    // {
+    //     $form = $this->createForm(RegistrationType::class, $user);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $user = $form->getData();
 
-            // semblable a un git commit ""
-            $manager->persist($user);
-            //senblable a un git push
-            $manager->flush();
+    //         // semblable a un git commit ""
+    //         $manager->persist($user);
+    //         //senblable a un git push
+    //         $manager->flush();
 
-            $this->addFlash(
-                'success',
-                'L\'utilisateur a bien été modifier!'
-            );
+    //         $this->addFlash(
+    //             'success',
+    //             'L\'utilisateur a bien été modifier!'
+    //         );
 
-            return $this->redirectToRoute('user_index');
-        }
+    //         return $this->redirectToRoute('user_index');
+    //     }
 
 
-        return $this->render('pages/registration/edit.html.twig', [
+    //     return $this->render('pages/registration/edit.html.twig', [
 
-            'form' => $form->createView()
-        ]);
-    }
+    //         'form' => $form->createView()
+    //     ]);
+    // }
 
 }

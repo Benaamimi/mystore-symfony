@@ -27,7 +27,10 @@
 								<a class="nav-link" href="#">Panier</a>
 							</li>
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Gestion des produits</a>
+								{# {% if is_granted("ROLE_ADMIN") %} #}
+									<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Gestion</a>
+								{# {% endif %} #}
+
 								<div class="dropdown-menu">
 									<a class="dropdown-item" href="{{path('product_add')}}">Ajouter un produit</a>
 									<a class="dropdown-item" href="{{path('product_index')}}">Liste des produits</a>
@@ -39,8 +42,13 @@
 								</div>
 							</li>
 						</ul>
-						<a class="btn btn-outline-info btn-sm" href="{{ path('app_login') }}">Connexion</a>
-						<a class="btn btn-outline-danger btn-sm mx-4" href="{{ path('app_logout') }}">Deconnexion</a>
+						{% if app.user %}
+							<a class="btn btn-outline-danger btn-sm mx-4" href="{{ path('app_logout') }}">Deconnexion</a>
+						{% else %}
+
+							<a class="btn btn-outline-info btn-sm" href="{{ path('app_login') }}">Connexion</a>
+						{% endif %}
+
 					</div>
 				</div>
 			</nav>
