@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyStore - Registration{% endblock %}
+
+
+{% block body %}
+	<div class="container mt-4 col-md-6">
+    <h1 class="text-center my-4">Formulaire d'inscription</h1>
+    
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-dismissible alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+        {{form_start(form)}}
+
+		{{ form_row(form.fullName) }}
+		{{ form_row(form.pseudo) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.gender) }}
+		{{ form_row(form.plainPassword) }}
+		 <div class="form-group">
+			<button type="submit" class="btn btn-primary mt-4">Valider</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
+

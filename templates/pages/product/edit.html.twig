@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyStore - Modifier un produit
+{% endblock %}
+
+{% block body %}
+		<h1 class="my-4 text-center">Formulaire de modification</h1>
+	<div class="container mt-4">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-dismissible alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+			{{ form_start(form) }}
+			{{ form_row(form.title) }}
+			{{ form_row(form.description) }}
+			{{ form_row(form.color) }}
+			{{ form_row(form.size) }}
+			{{ form_row(form.collection) }}
+			{{ form_row(form.image) }}
+			{{ form_row(form.price) }}
+			{{ form_row(form.stock) }}
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary mt-4">Modifier un produit</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+	{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyStore - Personaliser un user
+{% endblock %}
+
+{% block body %}
+		<h1 class="my-4 text-center">Formulaire de personalisation</h1>
+	<div class="container mt-4">
+		
+
+		   {{form_start(form)}}
+
+		{{ form_row(form.gender) }}
+		{{ form_row(form.pseudo) }}
+		{{ form_row(form.fullName) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.plainPassword) }}
+		 <div class="form-group">
+			<button type="submit" class="btn btn-primary mt-4">Valider</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+
+	{% endblock %}
