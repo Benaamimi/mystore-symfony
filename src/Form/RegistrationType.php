@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
@@ -26,12 +27,22 @@ class RegistrationType extends AbstractType
                     'Femme' => 'Women',
                 ],
             ])
+
             ->add('pseudo',  TextType::class, [
                 'label' => 'Pseudo (facultatif)',
             ])
+
             ->add('fullName')
             ->add('email')
-            // ->add('roles')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Membre' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN'
+                ],
+                'expanded' => true,
+                'multiple' => true,
+            ])
+
             ->add('plainPassword', RepeatedType::class, [
                 'type' =>  PasswordType::class,
                 'first_options' => ['label' => 'mot de passe'],

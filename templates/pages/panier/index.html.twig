@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyStore - Panier
+{% endblock %}
+
+{% block body %}
+	<div class="container my-4">
+		<h1 class="my-4">Panier</h1>
+		{% if items %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Produit</th>
+						<th>Prix</th>
+						<th>Quantité</th>
+						<th colspan="2">Total</th>
+					</tr>
+
+				</thead>
+				<tbody>
+					{% for item in items %}
+						<tr>
+							<td><img src="{{ item.product.image }}" alt="" width="50"></td>
+							<td>{{ item.product.price }}</td>
+							<td>
+								{{ item.quantity }}
+								<a href="{{ path('plus', {id: item.product.id}) }}" class="btn btn-primary mx-3">add</a>
+							</td>
+							<td>{{ item.product.price * item.quantity }}
+								€</td>
+							<td>
+								<a href="{{ path('cart_remove', {id: item.product.id}) }}" class="text-danger">Retirer</a>
+							</td>
+						</tr>
+					{% endfor %}
+
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="3" class="text-end">Total</td>
+						<td>{{ total }}
+							€</td>
+						<td>
+							<a href="#" class="btn btn-success">Faire la commande</a>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		{% else %}
+			<h2 class="text-center mt-5">Panier vide</h2>
+
+		{% endif %}
+	</div>
+
+
+{% endblock %}

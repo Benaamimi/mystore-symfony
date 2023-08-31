@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Product;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,9 +15,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home_index')]
-    public function index(): Response
+    public function index(ProductRepository $repo): Response
     {
-        return $this->render('/pages/home.html.twig');
+        return $this->render('pages/home.html.twig', [
+            'products' =>  $repo->findAll()
+        ]);
     }
 
     #[Route('/inscription', name: 'user_add')]
