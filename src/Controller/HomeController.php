@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Product;
+use App\Repository\OrdersRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,7 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     
 }

@@ -41,13 +41,13 @@
 						<td>{{ total }}
 							€</td>
 						<td>
-							<a href="#" class="btn btn-success">Faire la commande</a>
+							<a href="{{path('orders_add')}}" class="btn btn-success">Faire la commande</a>
 						</td>
 					</tr>
 				</tfoot>
 			</table>
 		{% else %}
-			<h2 class="text-center mt-5">Panier vide</h2>
+			<p class="mt-5">Panier vide <a class="text-success" href="{{path('home_index')}}">Retour à la boutique</a></p>
 
 		{% endif %}
 	</div>

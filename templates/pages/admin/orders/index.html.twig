@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyStore - Commandes{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('success') %}
+		<div class="alert alert-dismissible alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+	<h1 class="text-center my-4">Mes commandes</h1>
+
+	<table class="table table-hover">
+		<thead>
+			{# <tr>{% for oder in colonnes %}
+					{% if oder != "id" %}
+						<th>{{ oder }}</th>
+					{% endif %}
+				{% endfor %} #}
+				<th scope="col">#</th>
+				<th scope="col">Identité</th>
+				<th scope="col">Produit</th>
+				<th scope="col">Stock</th>
+				<th scope="col">Quantité</th>
+				<th scope="col">Prix total</th>
+				<th scope="col">Date de création</th>
+				<th scope="col">Stock qui reste</th>
+				<th scope="col">Retirer la commande</th>
+			
+			</tr>
+		</thead>
+		<tbody>
+			{% for order in orders %}
+				<tr class="table-primary">
+					<td>{{ order.id }}</td>
+					<td>{{ order.users }}</td>
+					<td>{{ order.products }}</td>
+					<td>{{ order.products.stock }}</td>
+					<td>{{ order.quantity }}</td>
+					<td>{{ order.totalPrice * order.quantity }}</td>
+					<td>{{ order.createdAt|date("d/m/Y") }}</td>
+					<td>{{ order.products.stock - order.quantity }}</td>
+					{# <td>
+						<a href="#" class="btn btn-info">Modifier</a>
+					</td> #}
+					<td>
+						<a href="{{path('order_delete', {id: order.id})}}" class="btn btn-danger">Supprimer</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	{% endblock %}

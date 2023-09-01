@@ -34,14 +34,14 @@ class RegistrationType extends AbstractType
 
             ->add('fullName')
             ->add('email')
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Membre' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN'
-                ],
-                'expanded' => true,
-                'multiple' => true,
-            ])
+            // ->add('roles', ChoiceType::class, [
+            //     'choices' => [
+            //         'Membre' => 'ROLE_USER',
+            //         'Admin' => 'ROLE_ADMIN'
+            //     ],
+            //     'expanded' => true,
+            //     'multiple' => true,
+            // ])
 
             ->add('plainPassword', RepeatedType::class, [
                 'type' =>  PasswordType::class,

@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Orders;
 use App\Entity\Product;
+use App\Form\RolesType;
 use App\Form\ProductType;
 use App\Form\RegistrationType;
 use App\Repository\UserRepository;
+use App\Repository\OrdersRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +41,7 @@ class AdminController extends AbstractController
     #[Route('/admin/membre/modifier/{id}', name: 'user_edit')]
     public function edit(EntityManagerInterface $manager, Request $request, User $user): Response
     {
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(RolesType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +54,7 @@ class AdminController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'L\'utilisateur a bien été modifier!'
+                'Le status de l\'utilisateur a bien été modifier!'
             );
 
             return $this->redirectToRoute('user_index');
@@ -165,6 +168,41 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('product_index');
     }
+
+    //commandes
+
+    #[Route('/admin/commande', name: 'orders_index')]
+    public function display(OrdersRepository $repo, EntityManagerInterface $manager): Response
+    {
+
+        // $colonnes = $manager->getClassMetadata(Orders::class)->getFieldNames();
+
+        $orders = $repo->findAll();
+        return $this->render('pages/admin/orders/index.html.twig', [
+            'orders' => $orders,
+            // 'colonnes' => $colonnes
+
+        ]);
+    }
+
+    #[Route('/admin/commande/suppression/{id}', 'order_delete', methods: ['GET'])]
+    public function supprim(EntityManagerInterface $manager, Orders $order): Response
+    {
+        $manager->remove($order);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'La commande a bien été supprimer!'
+        );
+
+        return $this->redirectToRoute('orders_index');
+    }
+
+   
+    
+
+
 
 
 
