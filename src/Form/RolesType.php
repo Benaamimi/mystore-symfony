@@ -13,7 +13,7 @@ class RolesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('fullName')
+            ->add('fullName')
             // ->add('email')
             ->add('roles', ChoiceType::class, [
                 'choices' => [
