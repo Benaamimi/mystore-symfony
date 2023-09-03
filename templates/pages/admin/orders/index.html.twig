@@ -39,7 +39,7 @@
 					<td>{{ order.quantity }}</td>
 					<td>{{ order.totalPrice * order.quantity }}</td>
 					<td>{{ order.createdAt|date("d/m/Y") }}</td>
-					<td>{{ order.products.stock - order.quantity }}</td>
+					<td>{{ order.products.stock - order.quantity  }}</td>
 					{# <td>
 						<a href="#" class="btn btn-info">Modifier</a>
 					</td> #}

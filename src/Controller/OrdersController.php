@@ -27,36 +27,40 @@ class OrdersController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $panier = $session->get('cart', []);
+
+        
         // $panier = $cs->getCartWithData('cart', []);
         // $panier = $session->$this->getCartWithData();
-
+        
         // if($panier === [])
         // {
-        //     $this->addFlash('message', 'Votre panier est vide');
-        //     return $this->redirectToRoute('home_index');
-        // }
-        // $order = new Orders;
-
-        
-        
-        foreach($panier as $item => $quantity)
-        // foreach($panier as $item )
-        {
+            //     $this->addFlash('message', 'Votre panier est vide');
+            //     return $this->redirectToRoute('home_index');
+            // }
+            // $order = new Orders;
+            
+            
+            foreach($panier as $item => $quantity)
+            // foreach($panier as $item )
+            {
+            
             $order = new Orders;
             
             $product = $repo->find($item);
             
             $price = $product->getPrice();
-            $stock = $product->getStock();
+            // $stock = $product->getStock();
             
             $order->setUsers($this->getUser());
             $order->setProducts($product);
             $order->setTotalPrice($price);
             $order->setQuantity($quantity);
-            $order->setQuantity($stock);
-
-            $manager->persist($order);
+            // $order->setQuantity($stock);
+            
+            // dd($order);
         }
+        $manager->persist($order);
+        
         
         $manager->flush();
         
@@ -65,7 +69,7 @@ class OrdersController extends AbstractController
         
         $this->addFlash(
             'success',
-            'Votre produit a bien été commander!'
+            'Votre article a bien été commander!'
         );
         
         // dd($order);
