@@ -37,7 +37,7 @@
 					<td>{{ product.color }}</td>
 					<td>{{ product.size }}</td>
 					<td>{{ product.collection }}</td>
-					<td>{{ product.image }}</td>
+					 <td><img src="{{ asset(product.image) }}" alt="" width="50"></td>
 					<td>{{ product.price }} €</td>
 					<td>{{ product.stock }}</td>
 					<td>{{ product.createdAt|date("d/m/Y") }}</td>

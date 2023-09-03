@@ -15,7 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 class AdminController extends AbstractController
@@ -96,7 +98,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/produit/ajouter', name: 'product_add')]
-    public function add(Request $request, EntityManagerInterface $manager): Response
+    public function add(Request $request, EntityManagerInterface $manager, Product $product = null,  SluggerInterface $slugger): Response
     {
         $product = new Product();
 
@@ -108,6 +110,26 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $product = $form->getData();
+
+            $imageFile = $form->get('image')->getData();
+
+            
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('img_upload'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                }
+                $product->setImage($newFilename);
+
+            }
 
             $manager->persist($product);
             $manager->flush();

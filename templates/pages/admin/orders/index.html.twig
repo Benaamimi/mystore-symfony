@@ -37,7 +37,7 @@
 					<td>{{ order.products }}</td>
 					<td>{{ order.products.stock }}</td>
 					<td>{{ order.quantity }}</td>
-					<td>{{ order.totalPrice * order.quantity }}</td>
+					<td>{{ order.totalPrice * order.quantity }} €</td>
 					<td>{{ order.createdAt|date("d/m/Y") }}</td>
 					<td>{{ order.products.stock - order.quantity  }}</td>
 					{# <td>
