@@ -69,7 +69,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/produit/suppression/{id}', 'user_delete', methods: ['GET'])]
+    #[Route('/admin/membre/suppression/{id}', name:'user_delete')]
     public function supprimer(EntityManagerInterface $manager, User $user): Response
     {
         $manager->remove($user);
@@ -149,14 +149,33 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/produit/modifier/{id}', name: 'product_edit')]
-    public function modif(EntityManagerInterface $manager, Request $request, Product $product): Response
+    public function modif(EntityManagerInterface $manager, Request $request, Product $product, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
+            
+            $imageFile = $form->get('image')->getData();
 
+            
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('img_upload'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                }
+                $product->setImage($newFilename);
+
+            }
             // semblable a un git commit ""
             $manager->persist($product);
             //senblable a un git push
@@ -177,7 +196,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/produit/suppression/{id}', 'product_delete', methods: ['GET'])]
+    #[Route('/admin/produit/suppression/{id}', name:'product_delete')]
     public function delete(EntityManagerInterface $manager, Product $product): Response
     {
         $manager->remove($product);
@@ -207,7 +226,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/commande/suppression/{id}', 'order_delete', methods: ['GET'])]
+    #[Route('/admin/commande/suppression/{id}', name:'order_delete')]
     public function supprim(EntityManagerInterface $manager, Orders $order): Response
     {
         $manager->remove($order);

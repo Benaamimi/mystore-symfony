@@ -10,22 +10,35 @@
 		</div>
 	{% endfor %}
 
-	<div class="container mt-4">
+	  <div id="video" class="position-relative">
+      <video autoplay loop muted class="d-block w-100" src="{{asset("video/fashion.mp4")}}" ></video >
+      <div class="position-absolute top-50 start-50 translate-middle text-center">
+        <h1 class="text-light">MyStore</h1>
+        <p class="text-light">Les soldes de cet été arrivent</p>
+       	{% if not app.user %}
+				<a href="{{path('user_add')}}" class="btn btn-primary my-4">Inscription</a>
+			{% endif %}
+       
+      </div>
+    </div>
+
+	{# <div class="container mt-4">
 		<h1 class="my-4">MyStore</h1>
 		<h5 class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h5>
 		<p class="card-text">
 			{% if not app.user %}
 				<a href="{{path('user_add')}}" class="btn btn-primary my-4">Inscription</a>
 			{% endif %}
-		</p>
+		</p> #}
 	</div>
-	<h1 class="mt-5 container">Boutique</h1>
+	<h1 class="mb-4 text-center text-light bg-dark">Boutique</h1>
+	<div class="container">
 	<div class="mt-4 row gx-3">
 		{% for product in products %}
 
 			<div class="col-md-3 container">
 				<div class="card border-primary mb-3" style="max-width: 20rem;">
-					<div class="card-header"><img src="{{ asset(product.image) }}" alt="" class="img-fluid"></div>
+					<div class="card-header"><img src="{{ asset("img/upload/" ~ product.image) }}" alt="" class="img-fluid"></div>
 					<div class="card-body">
 						<h4 class="card-title">{{product.title}}</h4>
 						<p class="card-text">{{ product.description }}
@@ -40,6 +53,7 @@
 				</div>
 			</div>
 		{% endfor %}
+	</div>
 	</div>
 
 {% endblock %}

@@ -66,6 +66,7 @@ class OrdersController extends AbstractController
 
 
         $session->remove('cart');
+        $session->remove('qt');
 
         $this->addFlash(
             'success',
